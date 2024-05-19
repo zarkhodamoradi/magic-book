@@ -48,11 +48,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int discover = R.id.discover;
+                int profile = R.id.profile ;
+                int library = R.id.library ;
                 int id = item.getItemId();
                 if (id == discover) {
                    replaceFragment(new DiscoverFragment());
                     return true;
                 }
+                else if(id == profile){
+                    replaceFragment(new DiscoverFragment());
+                    return true;
+                }
+                else if (id == library){
+                    replaceFragment(new DiscoverFragment());
+                    return true;
+                }
+
 //                    case R.id.navigation_dashboard:
 //                        startActivity(new Intent(MainActivity.this, Profile.class));
 //                        return true;
@@ -70,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationview);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.botton_nav_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.botton_nav_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     public void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();

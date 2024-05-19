@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.google.gson.Gson;
@@ -23,10 +24,14 @@ public class DiscoverFragment extends Fragment {
 
     private RecyclerView recyclerViewDiscover;
     private SearchView searchViewDiscover;
+    private RecyclerView recyclerViewDiscoverFantasy;
+    private RecyclerView recyclerViewDiscoverFiction;
+    private RecyclerView recyclerViewDiscoverScienceFiction;
     private ArrayList<Book> booksList;
     private bookArrayAdapter adapter;
     private ArrayList<Book> AllOfTheBooks;
     private WebService webService;
+
 
     public DiscoverFragment() {
         // Required empty public constructor
@@ -37,6 +42,7 @@ public class DiscoverFragment extends Fragment {
         super.onCreate(savedInstanceState);
         AllOfTheBooks = new ArrayList<>(); // Initialize here to avoid null reference
         booksList = new ArrayList<>();
+
     }
 
     @Override
@@ -45,6 +51,7 @@ public class DiscoverFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_discover, container, false);
         recyclerViewDiscover = rootView.findViewById(R.id.recyclerViewDiscover);
         searchViewDiscover = rootView.findViewById(R.id.searchViewDiscover);
+
         webService = new WebService();
         webService.SetupRequextQueue(rootView.getContext());
 
@@ -84,6 +91,7 @@ public class DiscoverFragment extends Fragment {
     private void fetchDataAndFillList() {
         new Thread(() -> {
             try {
+
                 String json = webService.GetContentOfUrlConnection(webService.GetByUrl);
                 if (json != null && !json.isEmpty()) {
                     Gson gson = new Gson();

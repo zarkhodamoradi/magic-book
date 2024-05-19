@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import java.util.Date;
+
 public class Book {
     private int Id ;
     private String Title ;
@@ -7,7 +9,24 @@ public class Book {
     private String Discription ;
     private String Category ;
     private String Image ;
+    private Double rating ;
+    private String publishDate ;
 
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
+    }
 //    public Book(String title, int price) {
 //        Title = title;
 //        this.price = price;
@@ -51,7 +70,18 @@ public class Book {
 //        this.category = category;
 //    }
 
-    public Book( String title, int price, String discription, String category,String Image) {
+    public Book(int id, String title, int price, String discription, String category, String image, Double rating, String publishDate) {
+        Id = id;
+        Title = title;
+        Price = price;
+        Discription = discription;
+        Category = category;
+        Image = image;
+        this.rating = rating;
+        this.publishDate = publishDate;
+    }
+
+    public Book(String title, int price, String discription, String category, String Image) {
 
         Title = title;
         this.Price = price;

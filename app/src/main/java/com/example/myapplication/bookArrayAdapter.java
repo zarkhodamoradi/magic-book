@@ -72,8 +72,8 @@ import java.util.ArrayList;
             public void FillItem(final Book book) {
                 RequestQueue requestQueue = Volley.newRequestQueue(imgBook.getContext()); ;
                 txtTitle.setText(book.getTitle() );
-                if (book.getTitle().length()>15){
-                    txtTitle.setText(book.getTitle().substring(0,15)+" ..." );
+                if (book.getTitle().length()>12){
+                    txtTitle.setText(book.getTitle().substring(0,12)+" ..." );
                 }
                 txtPrice.setText( "$" + book.getPrice() );
                 try{
