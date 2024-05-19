@@ -6,11 +6,12 @@ public class Book {
     private int Id ;
     private String Title ;
     private int Price ;
-    private String Discription ;
+    private String Description ;
     private String Category ;
     private String Image ;
     private Double rating ;
     private String publishDate ;
+    private String author ;
 
     public Double getRating() {
         return rating;
@@ -43,6 +44,13 @@ public class Book {
     public Book() {
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 //    public Book(int id, String title, int price) {
 //        this.id = id;
 //        Title = title;
@@ -70,22 +78,23 @@ public class Book {
 //        this.category = category;
 //    }
 
-    public Book(int id, String title, int price, String discription, String category, String image, Double rating, String publishDate) {
+    public Book(int id, String title, int price, String description, String category, String image, Double rating, String publishDate , String author) {
         Id = id;
         Title = title;
         Price = price;
-        Discription = discription;
+        Description = description;
         Category = category;
         Image = image;
         this.rating = rating;
         this.publishDate = publishDate;
+        this.author = author ;
     }
 
     public Book(String title, int price, String discription, String category, String Image) {
 
         Title = title;
         this.Price = price;
-        this.Discription = discription;
+        this.Description = discription;
         this.Category = category;
         this.Image = Image ;
     }
@@ -93,7 +102,7 @@ public class Book {
 
         Title = title;
         this.Price = price;
-        this.Discription = discription;
+        this.Description = discription;
         this.Category = category;
 
     }
@@ -129,11 +138,11 @@ public class Book {
         this.Price = price;
     }
 
-    public String getDiscription() {
-        return Discription;
+    public String getDescription() {
+        return Description;
     }
 
-    public void setDiscription(String discription) {
-        this.Discription = discription;
+    public void setDescription(String discription) {
+        this.Description = discription;
     }
 }

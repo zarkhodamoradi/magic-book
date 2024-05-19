@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 
         Context context;
         int resource;
-        ArrayList<Book> booksArrayList;
+        static ArrayList<Book> booksArrayList;
 
         public bookArrayAdapter(Context context, int resource, ArrayList<Book> booksArrayList) {
             this.context = context;
@@ -67,6 +68,29 @@ import java.util.ArrayList;
                 btnPurchase = itemView.findViewById(R.id.btnPurchase);
                 imgBook = itemView.findViewById(R.id.imgBook);
 
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Book book = booksArrayList.get(position);
+
+                            // Create an intent to start the BookDetailActivity
+                            Intent intent = new Intent(itemView.getContext(), BookDetailsActivity.class);
+                            intent.putExtra("Title", book.getTitle());
+                            intent.putExtra("Price", book.getPrice());
+                            intent.putExtra("Description", book.getDescription());
+                            intent.putExtra("imageUrl", book.getImage());
+                            intent.putExtra("Category",book.getCategory());
+                            intent.putExtra("Rating",book.getRating());
+                            intent.putExtra("PublishDate",book.getPublishDate());
+                            intent.putExtra("Author",book.getAuthor());
+
+                            // Start the activity
+                            itemView.getContext().startActivity(intent);
+                        }
+                    }
+                });
             }
 
             public void FillItem(final Book book) {

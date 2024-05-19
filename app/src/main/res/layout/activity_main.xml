@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottomNavigationview"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         android:background="@color/darkBlue">
 
@@ -29,10 +29,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="-36dp"
+        android:layout_marginBottom="-3dp"
         android:background="@color/darkBlue"
-        android:foregroundGravity="bottom"
         android:fitsSystemWindows="true"
+        android:foregroundGravity="bottom"
         app:elevation="10dp"
+
         app:menu="@menu/botton_nav_menu" />
 </RelativeLayout>
