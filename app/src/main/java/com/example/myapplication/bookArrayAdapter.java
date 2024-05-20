@@ -1,7 +1,10 @@
 package com.example.myapplication;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -55,8 +59,8 @@ import java.util.ArrayList;
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
             TextView txtTitle;
-            TextView txtPrice;
-            ImageView btnPurchase;
+////            TextView txtPrice;
+//            ImageView btnPurchase;
             ImageView imgBook ;
 
 
@@ -64,8 +68,8 @@ import java.util.ArrayList;
 
                 super(itemView);
                 txtTitle = itemView.findViewById(R.id.txtTitle);
-                txtPrice = itemView.findViewById(R.id.txtPrice);
-                btnPurchase = itemView.findViewById(R.id.btnPurchase);
+//                txtPrice = itemView.findViewById(R.id.txtPrice);
+//                btnPurchase = itemView.findViewById(R.id.btnPurchase);
                 imgBook = itemView.findViewById(R.id.imgBook);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
@@ -85,9 +89,19 @@ import java.util.ArrayList;
                             intent.putExtra("Rating",book.getRating());
                             intent.putExtra("PublishDate",book.getPublishDate());
                             intent.putExtra("Author",book.getAuthor());
+                            Pair<View, String> p1 = Pair.create((View)imgBook, "bookImage");
+
+
+
+                            // Create the transition animation - the images in the layouts
+                            // of both activities are defined with android:transitionName="robot"
+                            ActivityOptions options = ActivityOptions
+                                    .makeSceneTransitionAnimation(((Activity)itemView.getContext()), imgBook, "bookImage");
+                            // Start the new activity
 
                             // Start the activity
-                            itemView.getContext().startActivity(intent);
+                 itemView.getContext().startActivity(intent , options.toBundle());
+
                         }
                     }
                 });
@@ -99,12 +113,12 @@ import java.util.ArrayList;
                 if (book.getTitle().length()>12){
                     txtTitle.setText(book.getTitle().substring(0,12)+" ..." );
                 }
-                txtPrice.setText( "$" + book.getPrice() );
+//                txtPrice.setText( "$" + book.getPrice() );
                 try{
                     WebService.GetImage(book.getImage(),imgBook,requestQueue);
                 }catch (Exception e){ e.printStackTrace();}
 
-
+                imgBook.setTransitionName("bookImage" + getAdapterPosition());
             }
         }
 

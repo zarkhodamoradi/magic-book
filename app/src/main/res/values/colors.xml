@@ -4,4 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="darkGray">#1D2A31</color>
     <color name="darkBlue">#0A0827</color>
+    <color name="midBlue">#778381A5</color>
+    <color name="lightBlue">#815C5A7C</color>
+    <color name="firstLight">#c8d3ec</color>
+    <color name="secondLight">#75B6A1C8</color>
+    <color name="thirdLight">#7b4b69</color>
+
+
 </resources>

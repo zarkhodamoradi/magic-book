@@ -2,7 +2,18 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowActivityTransitions">true</item>
+
+        <!-- specify enter and exit transitions -->
+<!--        <item name="android:windowEnterTransition">@transition/explode</item>-->
+<!--        <item name="android:windowExitTransition">@transition/explode</item>-->
+
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_image_transform</item>
+        <item name="android:windowBackground">@color/darkBlue</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />

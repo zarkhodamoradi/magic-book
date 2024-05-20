@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/baloo_bhaina</item>
+        <item>@font/baloo_paaji_2_medium</item>
+        <item>@font/dancing_script_bold</item>
+        <item>@font/days_one</item>
+        <item>@font/hammersmith_one</item>
+        <item>@font/racing_sans_one</item>
+    </array>
+</resources>
