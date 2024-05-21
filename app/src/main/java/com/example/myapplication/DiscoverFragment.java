@@ -24,47 +24,48 @@ public class DiscoverFragment extends Fragment {
 
     private RecyclerView recyclerViewDiscover;
     private SearchView searchViewDiscover;
-    private RecyclerView recyclerViewDiscoverFantasy;
-    private RecyclerView recyclerViewDiscoverFiction;
-    private RecyclerView recyclerViewDiscoverScienceFiction;
+
+
     private ArrayList<Book> booksList;
     private bookArrayAdapter adapter;
     private ArrayList<Book> AllOfTheBooks;
     private WebService webService;
 
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public DiscoverFragment() {
         // Required empty public constructor
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AllOfTheBooks = new ArrayList<>(); // Initialize here to avoid null reference
+        AllOfTheBooks = new ArrayList<>();
         booksList = new ArrayList<>();
 
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_discover, container, false);
         recyclerViewDiscover = rootView.findViewById(R.id.recyclerViewDiscover);
         searchViewDiscover = rootView.findViewById(R.id.searchViewDiscover);
-
         webService = new WebService();
         webService.SetupRequextQueue(rootView.getContext());
 
-        // Set up RecyclerView
+
         adapter = new bookArrayAdapter(rootView.getContext(), R.layout.book, booksList);
         recyclerViewDiscover.setItemAnimator(new DefaultItemAnimator());
         recyclerViewDiscover.setLayoutManager(new GridLayoutManager(rootView.getContext(), 3));
         recyclerViewDiscover.setAdapter(adapter);
 
-        // Fetch data and update UI
+
         fetchDataAndFillList();
 
-        // Set up SearchView
+
         searchViewDiscover.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -87,7 +88,9 @@ public class DiscoverFragment extends Fragment {
 
         return rootView;
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void fetchDataAndFillList() {
         new Thread(() -> {
             try {
@@ -95,7 +98,8 @@ public class DiscoverFragment extends Fragment {
                 String json = webService.GetContentOfUrlConnection(webService.GetByUrl);
                 if (json != null && !json.isEmpty()) {
                     Gson gson = new Gson();
-                    Type listType = new TypeToken<ArrayList<Book>>() {}.getType();
+                    Type listType = new TypeToken<ArrayList<Book>>() {
+                    }.getType();
                     AllOfTheBooks = gson.fromJson(json, listType);
                     if (AllOfTheBooks != null) {
                         booksList.clear();
@@ -109,13 +113,15 @@ public class DiscoverFragment extends Fragment {
         }).start();
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void searchBooks(String query) {
         new Thread(() -> {
             try {
                 String searchBooksJson = webService.GetContentOfUrlConnection(webService.URLSearchByTitle + query);
                 if (searchBooksJson != null && !searchBooksJson.isEmpty()) {
                     Gson gson = new Gson();
-                    Type listType = new TypeToken<ArrayList<Book>>() {}.getType();
+                    Type listType = new TypeToken<ArrayList<Book>>() {
+                    }.getType();
                     ArrayList<Book> searchResults = gson.fromJson(searchBooksJson, listType);
                     if (searchResults != null) {
                         getActivity().runOnUiThread(() -> {
