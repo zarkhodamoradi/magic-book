@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 else if(id == profile){
-                    replaceFragment(new DiscoverFragment());
+                    replaceFragment(new ProfileFragment());
                     return true;
                 }
                 else if (id == library){
