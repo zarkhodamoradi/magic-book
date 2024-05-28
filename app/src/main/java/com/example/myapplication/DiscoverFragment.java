@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,11 +8,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Space;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,12 +27,12 @@ public class DiscoverFragment extends Fragment {
 
     private RecyclerView recyclerViewDiscover;
     private SearchView searchViewDiscover;
-
-
     private ArrayList<Book> booksList;
     private bookArrayAdapter adapter;
     private ArrayList<Book> AllOfTheBooks;
     private WebService webService;
+    private ProgressBar progressBar;
+    private Space spaceAboveProgressBarDiscoverFragment;
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,6 +56,10 @@ public class DiscoverFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_discover, container, false);
         recyclerViewDiscover = rootView.findViewById(R.id.recyclerViewDiscover);
         searchViewDiscover = rootView.findViewById(R.id.searchViewDiscover);
+        progressBar = rootView.findViewById(R.id.progressBarDiscover);
+        spaceAboveProgressBarDiscoverFragment = rootView.findViewById(R.id.spaceAboveProgressBarDiscoverFragment);
+
+
         webService = new WebService();
         webService.SetupRequextQueue(rootView.getContext());
 
@@ -92,6 +99,9 @@ public class DiscoverFragment extends Fragment {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void fetchDataAndFillList() {
+        progressBar.setVisibility(View.VISIBLE);
+        spaceAboveProgressBarDiscoverFragment.setVisibility(View.VISIBLE);
+        Handler handler = new Handler();
         new Thread(() -> {
             try {
 
@@ -107,6 +117,16 @@ public class DiscoverFragment extends Fragment {
                         getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
                     }
                 }
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        spaceAboveProgressBarDiscoverFragment.setVisibility(View.GONE);
+                    }
+                });
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

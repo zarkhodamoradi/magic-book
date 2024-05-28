@@ -7,25 +7,41 @@
 
     tools:context=".DiscoverFragment">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <SearchView
-        android:id="@+id/searchViewDiscover"
-        android:layout_width="match_parent"
-        android:queryHint="Search for books..."
-        android:layout_height="wrap_content" />
-
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewDiscover"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:padding="3dp" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <SearchView
+            android:id="@+id/searchViewDiscover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:id="@+id/spaceAboveProgressBarDiscoverFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressBarDiscover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progress_bar"
+            android:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDiscover"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:padding="3dp" />
+
+    </LinearLayout>
 
 </FrameLayout>
