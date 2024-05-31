@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ public class UserLoginActivity extends AppCompatActivity {
     private TextInputLayout usernameInputLayout, passwordInputLayout;
     private TextInputEditText usernameEditText, passwordEditText;
     private MaterialButton loginButton;
-    private TextView adminLoginButton;
+    private TextView adminLoginButton, userRegisterBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,14 @@ public class UserLoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(view -> handleLogin());
         adminLoginButton.setOnClickListener(view -> handleAdminLogin());
+        userRegisterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserLoginActivity.this, UserRegisterActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void handleLogin() {
@@ -126,5 +135,6 @@ public class UserLoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordInputEditText);
         loginButton = findViewById(R.id.loginButton);
         adminLoginButton = findViewById(R.id.loginAdminButton);
+        userRegisterBtn = findViewById(R.id.userRegisterButton);
     }
 }

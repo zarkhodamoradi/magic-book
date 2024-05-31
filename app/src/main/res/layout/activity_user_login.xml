@@ -23,7 +23,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_margin="14dp"
-        android:layout_weight="1"
+        android:layout_weight="1.4"
 
         app:cardCornerRadius="30sp">
 
@@ -124,6 +124,19 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Login As An Admin"
+        android:textSize="20sp"></TextView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.015" />
+
+    <TextView
+        android:id="@+id/userRegisterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="Register"
         android:textSize="20sp"></TextView>
 
     <Space
