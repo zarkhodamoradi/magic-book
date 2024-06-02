@@ -80,7 +80,7 @@ public class UserLoginActivity extends AppCompatActivity {
     private void handleLogin() {
         String enteredUsername = Objects.requireNonNull(usernameEditText.getText()).toString().trim();
         String enteredPassword = Objects.requireNonNull(passwordEditText.getText()).toString().trim();
-        String endpoint = "https://mangareader.liara.run/auth/login/user/";
+        String endpoint = "https://magicbook.liara.run/magicbooks/auth/login/user/";
         RequestQueue queue = Volley.newRequestQueue(this);
 
         // Create a JSON object with the username and password

@@ -91,7 +91,7 @@ public class ProfileFragment extends Fragment {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("sharedPref", Context.MODE_PRIVATE);
         String jwt = sharedPreferences.getString("jwt", "");
 
-        String url = "https://mangareader.liara.run/user/read/";
+        String url = "https://magicbook.liara.run/magicbooks/user/read/";
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
