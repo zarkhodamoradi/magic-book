@@ -9,6 +9,11 @@ public class Category {
     private ArrayList<Book> books;
     private int bookCount ;
 
+    public Category(String categoryName) {
+
+        this.categoryName = categoryName;
+
+    }
     public Category(int categoryId, String categoryName, ArrayList<Book> books, int bookCount) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;

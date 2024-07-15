@@ -54,7 +54,7 @@ public class UserRegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        String url = "https://magicbook.liara.run/magicbooks/user/create/";
+        String url = "https://magicbooks.liara.run/magicbooks/user/create/";
         RequestQueue queue = Volley.newRequestQueue(this);
 
         // Create a JSON object with the user details

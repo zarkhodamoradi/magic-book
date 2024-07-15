@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 public class DiscoverFragment extends Fragment {
 
     private RecyclerView recyclerViewDiscover;
+    private RecyclerView parentRecyclerViewDiscover;
     private SearchView searchViewDiscover;
     private ArrayList<Book> booksList;
     private bookArrayAdapter adapter;
@@ -33,7 +35,8 @@ public class DiscoverFragment extends Fragment {
     private WebService webService;
     private ProgressBar progressBar;
     private Space spaceAboveProgressBarDiscoverFragment;
-
+    private majorArrayAdapter majorAdapter;
+    private ArrayList<Category> categories;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public DiscoverFragment() {
@@ -58,10 +61,18 @@ public class DiscoverFragment extends Fragment {
         searchViewDiscover = rootView.findViewById(R.id.searchViewDiscover);
         progressBar = rootView.findViewById(R.id.progressBarDiscover);
         spaceAboveProgressBarDiscoverFragment = rootView.findViewById(R.id.spaceAboveProgressBarDiscoverFragment);
+        parentRecyclerViewDiscover = rootView.findViewById(R.id.parentRecyclerViewDiscover);
 
 
         webService = new WebService();
         webService.SetupRequextQueue(rootView.getContext());
+        categories = new ArrayList<Category>();
+        categories.add(new Category("Humor"));
+        categories.add(new Category("Fiction"));
+
+        majorAdapter = new majorArrayAdapter(rootView.getContext(), R.layout.child_recycler_view, booksList, categories);
+        parentRecyclerViewDiscover.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
+        parentRecyclerViewDiscover.setAdapter(majorAdapter);
 
 
         adapter = new bookArrayAdapter(rootView.getContext(), R.layout.book, booksList);
@@ -71,6 +82,10 @@ public class DiscoverFragment extends Fragment {
 
 
         fetchDataAndFillList();
+
+
+
+
 
 
         searchViewDiscover.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -90,6 +105,8 @@ public class DiscoverFragment extends Fragment {
             booksList.clear();
             booksList.addAll(AllOfTheBooks);
             adapter.notifyDataSetChanged();
+            parentRecyclerViewDiscover.setVisibility(View.VISIBLE);
+            recyclerViewDiscover.setVisibility(View.GONE);
             return false;
         });
 
@@ -99,6 +116,8 @@ public class DiscoverFragment extends Fragment {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void fetchDataAndFillList() {
+        parentRecyclerViewDiscover.setVisibility(View.GONE);
+        recyclerViewDiscover.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         spaceAboveProgressBarDiscoverFragment.setVisibility(View.VISIBLE);
         Handler handler = new Handler();
@@ -115,6 +134,7 @@ public class DiscoverFragment extends Fragment {
                         booksList.clear();
                         booksList.addAll(AllOfTheBooks);
                         getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
+                        getActivity().runOnUiThread(() -> majorAdapter.notifyDataSetChanged());
                     }
                 }
 
@@ -123,6 +143,7 @@ public class DiscoverFragment extends Fragment {
                     public void run() {
                         progressBar.setVisibility(View.GONE);
                         spaceAboveProgressBarDiscoverFragment.setVisibility(View.GONE);
+                        parentRecyclerViewDiscover.setVisibility(View.VISIBLE);
                     }
                 });
 
@@ -135,8 +156,11 @@ public class DiscoverFragment extends Fragment {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void searchBooks(String query) {
+        parentRecyclerViewDiscover.setVisibility(View.GONE);
+        recyclerViewDiscover.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
+
                 String searchBooksJson = webService.GetContentOfUrlConnection(webService.URLSearchByTitle + query);
                 if (searchBooksJson != null && !searchBooksJson.isEmpty()) {
                     Gson gson = new Gson();
@@ -148,6 +172,7 @@ public class DiscoverFragment extends Fragment {
                             booksList.clear();
                             booksList.addAll(searchResults);
                             adapter.notifyDataSetChanged();
+
                         });
                     }
                 }

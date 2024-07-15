@@ -22,7 +22,7 @@ import java.net.URL;
 public class WebService {
 
     private  static RequestQueue requestQueue ;
-    public static final String orgURL = "https://magicbook.liara.run/magicbooks/";
+    public static final String orgURL = "https://magicbooks.liara.run/magicbooks/";
     public static  final  String URLSearchByTitle  =  orgURL+"showbooksbytitle/showBooksByTitle.php?SearchedTitle=";
     public static final String GetByUrl = orgURL +"getbooks/index.php"; //"getBooks.php" ;
     public static final String GetFiction = orgURL +"getBooksByCategory.php"; //"getBooks.php" ;
