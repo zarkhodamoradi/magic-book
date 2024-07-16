@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Space;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -49,7 +50,7 @@ public class DiscoverFragment extends Fragment {
         super.onCreate(savedInstanceState);
         AllOfTheBooks = new ArrayList<>();
         booksList = new ArrayList<>();
-
+        categories = new ArrayList<Category>();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,13 +67,15 @@ public class DiscoverFragment extends Fragment {
 
         webService = new WebService();
         webService.SetupRequextQueue(rootView.getContext());
-        categories = new ArrayList<Category>();
-        categories.add(new Category("Humor"));
-        categories.add(new Category("Fiction"));
 
-        majorAdapter = new majorArrayAdapter(rootView.getContext(), R.layout.child_recycler_view, booksList, categories);
-        parentRecyclerViewDiscover.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
-        parentRecyclerViewDiscover.setAdapter(majorAdapter);
+
+
+
+        fetchDataAndFillList();
+        getCategories(rootView);
+//        majorAdapter = new majorArrayAdapter(rootView.getContext(), R.layout.child_recycler_view, booksList, categories);
+//        parentRecyclerViewDiscover.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
+//        parentRecyclerViewDiscover.setAdapter(majorAdapter);
 
 
         adapter = new bookArrayAdapter(rootView.getContext(), R.layout.book, booksList);
@@ -81,7 +84,7 @@ public class DiscoverFragment extends Fragment {
         recyclerViewDiscover.setAdapter(adapter);
 
 
-        fetchDataAndFillList();
+
 
 
 
@@ -153,7 +156,31 @@ public class DiscoverFragment extends Fragment {
             }
         }).start();
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void getCategories(View rootView) {
+        Handler handler = new Handler();
+        new Thread(() -> {
+            try {
+                String json = webService.GetContentOfUrlConnection(webService.GetCategories);
+                if (json != null && !json.isEmpty()) {
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<Category>>() {}.getType();
+                    categories = gson.fromJson(json, listType);
 
+                    if (categories != null) {
+                        getActivity().runOnUiThread(() -> {
+                            majorAdapter = new majorArrayAdapter(rootView.getContext(), R.layout.child_recycler_view, booksList, categories);
+                            parentRecyclerViewDiscover.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
+                            parentRecyclerViewDiscover.setAdapter(majorAdapter);
+                            majorAdapter.notifyDataSetChanged();
+                        });
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void searchBooks(String query) {
         parentRecyclerViewDiscover.setVisibility(View.GONE);

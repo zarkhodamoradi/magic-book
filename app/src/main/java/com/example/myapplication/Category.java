@@ -14,18 +14,18 @@ public class Category {
         this.categoryName = categoryName;
 
     }
-    public Category(int categoryId, String categoryName, ArrayList<Book> books, int bookCount) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.books = books;
-        this.bookCount = bookCount;
-    }
-
-    public Category(int categoryId, String categoryName, ArrayList<Book> books) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.books = books;
-    }
+//    public Category(int categoryId, String categoryName, ArrayList<Book> books, int bookCount) {
+//        this.categoryId = categoryId;
+//        this.categoryName = categoryName;
+//        this.books = books;
+//        this.bookCount = bookCount;
+//    }
+//
+//    public Category(int categoryId, String categoryName, ArrayList<Book> books) {
+//        this.categoryId = categoryId;
+//        this.categoryName = categoryName;
+//        this.books = books;
+//    }
 
     public int getCategoryId() {
         return categoryId;
@@ -55,7 +55,5 @@ public class Category {
         return bookCount;
     }
 
-    public void setBookCount(int bookCount) {
-        this.bookCount = bookCount;
-    }
+public void setBookCount(){bookCount  = books.size(); }
 }

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
         Context context;
         int resource;
-        static ArrayList<Book> booksArrayList;
+         ArrayList<Book> booksArrayList;
 
         public bookArrayAdapter(Context context, int resource, ArrayList<Book> booksArrayList) {
             this.context = context;
@@ -56,7 +56,7 @@ import java.util.ArrayList;
             return booksArrayList.size();
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder {
+        public  class ViewHolder extends RecyclerView.ViewHolder {
 
             TextView txtTitle;
 ////            TextView txtPrice;

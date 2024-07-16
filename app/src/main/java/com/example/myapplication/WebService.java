@@ -25,7 +25,9 @@ public class WebService {
     public static final String orgURL = "https://magicbooks.liara.run/magicbooks/";
     public static  final  String URLSearchByTitle  =  orgURL+"showbooksbytitle/showBooksByTitle.php?SearchedTitle=";
     public static final String GetByUrl = orgURL +"getbooks/index.php"; //"getBooks.php" ;
-    public static final String GetFiction = orgURL +"getBooksByCategory.php"; //"getBooks.php" ;
+    public static final String GetCategories = orgURL +"getCategories/index.php"; //"getBooks.php" ;
+    public static  final  String getBooksByCategory  =  orgURL+"getBooksByCategory/index.php?Category=";
+
 
     public static String InputStreamToString(InputStream stream) {
         try {
