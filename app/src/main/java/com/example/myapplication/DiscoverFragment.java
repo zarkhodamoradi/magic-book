@@ -36,6 +36,8 @@ public class DiscoverFragment extends Fragment {
     private WebService webService;
     private ProgressBar progressBar;
     private Space spaceAboveProgressBarDiscoverFragment;
+    private Space spaceUnderProgressBarDiscoverFragment;
+
     private majorArrayAdapter majorAdapter;
     private ArrayList<Category> categories;
 
@@ -62,6 +64,7 @@ public class DiscoverFragment extends Fragment {
         searchViewDiscover = rootView.findViewById(R.id.searchViewDiscover);
         progressBar = rootView.findViewById(R.id.progressBarDiscover);
         spaceAboveProgressBarDiscoverFragment = rootView.findViewById(R.id.spaceAboveProgressBarDiscoverFragment);
+        spaceUnderProgressBarDiscoverFragment = rootView.findViewById(R.id.spaceUnderProgressBarDiscoverFragment);
         parentRecyclerViewDiscover = rootView.findViewById(R.id.parentRecyclerViewDiscover);
 
 
@@ -123,6 +126,8 @@ public class DiscoverFragment extends Fragment {
         recyclerViewDiscover.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         spaceAboveProgressBarDiscoverFragment.setVisibility(View.VISIBLE);
+        spaceUnderProgressBarDiscoverFragment.setVisibility(View.VISIBLE);
+
         Handler handler = new Handler();
         new Thread(() -> {
             try {
@@ -146,6 +151,8 @@ public class DiscoverFragment extends Fragment {
                     public void run() {
                         progressBar.setVisibility(View.GONE);
                         spaceAboveProgressBarDiscoverFragment.setVisibility(View.GONE);
+                        spaceUnderProgressBarDiscoverFragment.setVisibility(View.GONE);
+
                         parentRecyclerViewDiscover.setVisibility(View.VISIBLE);
                     }
                 });
