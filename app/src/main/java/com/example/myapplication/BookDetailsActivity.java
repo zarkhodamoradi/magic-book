@@ -1,13 +1,18 @@
 package com.example.myapplication;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 
 public class BookDetailsActivity extends AppCompatActivity {
 
@@ -30,6 +36,16 @@ public class BookDetailsActivity extends AppCompatActivity {
     ImageView imgBookDetailsSave;
     TextView txtBookDetailsDescription;
     TextView txtBookDetailsCategory ;
+    ImageView imgBookDetailsDownload ;
+    String Title ;
+    Integer Price ;
+    String Description ;
+    String ImageUrl ;
+    String Category ;
+    Double Rating ;
+    String PublishDate ;
+    String Author ;
+    String Book_Link ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +62,15 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         try {
             Bundle bundle = getIntent().getExtras();
-            String Title = bundle.getString("Title");
-            Integer Price = bundle.getInt("Price");
-            String Description = bundle.getString("Description");
-            String ImageUrl = bundle.getString("imageUrl");
-            String Category = bundle.getString("Category");
-            Double Rating = bundle.getDouble("Rating");
-            String PublishDate = bundle.getString("PublishDate");
-            String Author = bundle.getString("Author");
+             Title = bundle.getString("Title");
+             Price = bundle.getInt("Price");
+             Description = bundle.getString("Description");
+             ImageUrl = bundle.getString("imageUrl");
+             Category = bundle.getString("Category");
+             Rating = bundle.getDouble("Rating");
+             PublishDate = bundle.getString("PublishDate");
+             Author = bundle.getString("Author");
+             Book_Link = bundle.getString("Book_Link");
             txtBookDetailsTitle.setText(Title);
             txtBookDetailsAuthor.setText("by "+Author);
             txtBookDetailsDescription.setText(Description);
@@ -94,6 +111,26 @@ public class BookDetailsActivity extends AppCompatActivity {
                 else  imgBookDetailsLike.setImageResource(R.drawable.favorite_24px_filled);
             }
         });
+
+        imgBookDetailsDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ( Book_Link == null){
+                    Toast.makeText(BookDetailsActivity.this, "book link is empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(Book_Link));
+                    request.setTitle("Downloading Book");
+                    request.setDescription("Downloading book from server...");
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "book.pdf");
+
+                    DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                    downloadManager.enqueue(request);
+                   // Toast.makeText(BookDetailsActivity.this, "Downloading started...", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Download started...", Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void SetUpView() {
@@ -107,5 +144,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         imgBookDetailsSave = findViewById(R.id.imgBookDetailsSave);
         txtBookDetailsDescription = findViewById(R.id.txtBookDetailsDescription);
         txtBookDetailsCategory = findViewById(R.id.txtBookDetailsCategory);
+        imgBookDetailsDownload = findViewById(R.id.imgBookDetailsDownload);
+
     }
 }

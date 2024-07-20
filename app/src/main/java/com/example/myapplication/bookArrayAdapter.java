@@ -89,6 +89,7 @@ import java.util.ArrayList;
                             intent.putExtra("Rating",book.getRating());
                             intent.putExtra("PublishDate",book.getPublishDate());
                             intent.putExtra("Author",book.getAuthor());
+                            intent.putExtra("Book_Link",book.getBook_link());
                             Pair<View, String> p1 = Pair.create((View)imgBook, "bookImage");
 
 

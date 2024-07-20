@@ -12,6 +12,21 @@ public class Book {
     private Double rating ;
     private String publishDate ;
     private String author ;
+    private  String book_link ;
+
+    public Book(int id, String title, int price, String description, String category,String image, Double rating,String publishDate , String author ,  String book_link) {
+        Id = id;
+        Title = title;
+        Price = price;
+        Description = description;
+        Category = category;
+        Image = image;
+        this.rating = rating;
+        this.publishDate = publishDate;
+        this.author = author ;
+        this.book_link = book_link ;
+    }
+
 
     public Double getRating() {
         return rating;
@@ -78,34 +93,23 @@ public class Book {
 //        this.category = category;
 //    }
 
-    public Book(int id, String title, int price, String description, String category, String image, Double rating, String publishDate , String author) {
-        Id = id;
-        Title = title;
-        Price = price;
-        Description = description;
-        Category = category;
-        Image = image;
-        this.rating = rating;
-        this.publishDate = publishDate;
-        this.author = author ;
-    }
 
-    public Book(String title, int price, String discription, String category, String Image) {
-
-        Title = title;
-        this.Price = price;
-        this.Description = discription;
-        this.Category = category;
-        this.Image = Image ;
-    }
-    public Book( String title, int price, String discription, String category) {
-
-        Title = title;
-        this.Price = price;
-        this.Description = discription;
-        this.Category = category;
-
-    }
+//    public Book(String title, int price, String discription, String category, String Image) {
+//
+//        Title = title;
+//        this.Price = price;
+//        this.Description = discription;
+//        this.Category = category;
+//        this.Image = Image ;
+//    }
+//    public Book( String title, int price, String discription, String category) {
+//
+//        Title = title;
+//        this.Price = price;
+//        this.Description = discription;
+//        this.Category = category;
+//
+//    }
     public String getCategory() {
         return Category;
     }
@@ -144,5 +148,12 @@ public class Book {
 
     public void setDescription(String discription) {
         this.Description = discription;
+    }
+    public String getBook_link() {
+        return book_link;
+    }
+
+    public void setBook_link(String book_link) {
+        this.book_link = book_link;
     }
 }

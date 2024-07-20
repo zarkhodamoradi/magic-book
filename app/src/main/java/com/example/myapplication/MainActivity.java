@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             // Configure shared element transition
             getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
             getWindow().setSharedElementReturnTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
+
         }
         bottomNavigationView.setSelectedItemId(R.id.discover);
         replaceFragment(new DiscoverFragment());
