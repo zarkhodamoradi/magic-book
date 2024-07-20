@@ -167,17 +167,19 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="4" />
                             <ImageView
+                                android:id="@+id/imgBookDetailsReading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.8"
+                                android:visibility="gone"
+                                app:srcCompat="@drawable/baseline_chrome_reader_mode_24" />
+                            <ImageView
                                 android:id="@+id/imgBookDetailsDownload"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.8"
                                 app:srcCompat="@drawable/round_arrow_downward_24" />
-                            <ImageView
-                                android:id="@+id/imgBookDetailsReading"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.8"
-                                app:srcCompat="@drawable/baseline_chrome_reader_mode_24" />
+
 
                             <ImageView
                                 android:id="@+id/imgBookDetailsLike"

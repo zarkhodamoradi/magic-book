@@ -40,6 +40,8 @@ public class ProfileFragment extends Fragment {
     private TextView userName;
     private TextView userEmail;
 
+
+
     private ProgressBar loadingSpinner;
 
     public ProfileFragment() {
@@ -111,6 +113,11 @@ public class ProfileFragment extends Fragment {
 
                             userName.setText(user.getUserName());
                             userEmail.setText(user.getEmail());
+
+                            // Save the username in SharedPreferences
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("userName", user.getUserName());
+                            editor.apply();
 
                             // Load the image from the URL into the ImageView
                             GetImage(user.getImage(), userImage, queue);

@@ -13,8 +13,26 @@ public class Book {
     private String publishDate ;
     private String author ;
     private  String book_link ;
+    private  boolean saved ;
+    private boolean liked ;
 
-    public Book(int id, String title, int price, String description, String category,String image, Double rating,String publishDate , String author ,  String book_link) {
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+    public Book(int id, String title, int price, String description, String category, String image, Double rating, String publishDate , String author , String book_link) {
         Id = id;
         Title = title;
         Price = price;

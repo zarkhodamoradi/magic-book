@@ -31,11 +31,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+
 public class UserLoginActivity extends AppCompatActivity {
     private TextInputLayout usernameInputLayout, passwordInputLayout;
     private TextInputEditText usernameEditText, passwordEditText;
     private MaterialButton loginButton;
     private TextView adminLoginButton, userRegisterBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +80,7 @@ public class UserLoginActivity extends AppCompatActivity {
     }
 
     private void handleLogin() {
-        String enteredUsername = Objects.requireNonNull(usernameEditText.getText()).toString().trim();
+        String  enteredUsername = Objects.requireNonNull(usernameEditText.getText()).toString().trim();
         String enteredPassword = Objects.requireNonNull(passwordEditText.getText()).toString().trim();
         String endpoint = "https://magicbooks.liara.run/magicbooks/auth/login/user/";
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -137,4 +139,5 @@ public class UserLoginActivity extends AppCompatActivity {
         adminLoginButton = findViewById(R.id.loginAdminButton);
         userRegisterBtn = findViewById(R.id.userRegisterButton);
     }
+
 }

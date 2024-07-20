@@ -24,6 +24,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class BookDetailsActivity extends AppCompatActivity {
 
     ImageView imgBookDetailsImage;
@@ -38,6 +41,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     TextView txtBookDetailsCategory ;
     ImageView imgBookDetailsDownload ;
     ImageView imgBookDetailsReading ;
+    int Id ;
     String Title ;
     Integer Price ;
     String Description ;
@@ -47,7 +51,9 @@ public class BookDetailsActivity extends AppCompatActivity {
     String PublishDate ;
     String Author ;
     String Book_Link ;
-
+boolean isSaved ;
+boolean isLiked ;
+    WebService webService ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +67,13 @@ public class BookDetailsActivity extends AppCompatActivity {
         });
 
         SetUpView();
+         webService = new WebService();
+        webService.SetupRequextQueue(this );
+
 
         try {
             Bundle bundle = getIntent().getExtras();
+            Id = bundle.getInt("Id");
              Title = bundle.getString("Title");
              Price = bundle.getInt("Price");
              Description = bundle.getString("Description");
@@ -73,6 +83,9 @@ public class BookDetailsActivity extends AppCompatActivity {
              PublishDate = bundle.getString("PublishDate");
              Author = bundle.getString("Author");
              Book_Link = bundle.getString("Book_Link");
+             isSaved = bundle.getBoolean("isSaved");
+            isLiked = bundle.getBoolean("isLiked");
+
             txtBookDetailsTitle.setText(Title);
             txtBookDetailsAuthor.setText("by "+Author);
             txtBookDetailsDescription.setText(Description);
@@ -90,24 +103,41 @@ public class BookDetailsActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        final boolean[] save = {false};
+
+
+        isSaved = false ;
+        for (int i = 0; i < PersonalAccountFragment.myBooks.size(); i++) {
+            if (Id == PersonalAccountFragment.myBooks.get(i).getId()){
+                isSaved = true ;
+            }
+        }
+        if (isSaved==true){
+            imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_24);
+        }
+        else {
+            imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_border_24);
+        }
         imgBookDetailsSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save[0] = !save[0];
+                isSaved = !isSaved;
                 Animate(imgBookDetailsSave);
-                if (save[0] == false){
+                if (isSaved == false){
                     imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_border_24);
+                Update(webService.deleteSavedBook);
                 }
-                else  imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_24);
+                else {
+                    imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_24);
+                  Update(webService.insertBookToUserLibrary);
+                }
                 Animate(imgBookDetailsSave);
             }
         });
         final boolean[] like = {false};
-
         imgBookDetailsLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 like[0] = !like[0];
 
                 if (like[0] == false){
@@ -115,6 +145,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 }
                 else {
                     imgBookDetailsLike.setImageResource(R.drawable.favorite_24px_filled);
+
                 }
                 Animate(imgBookDetailsLike);
             }
@@ -174,5 +205,27 @@ public class BookDetailsActivity extends AppCompatActivity {
                     }
                 })
                 .start();
+    }
+
+    private void Update(String url){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                JSONObject jsonObject = new JSONObject();
+
+                try {
+                    jsonObject.put("userName", MainActivity.USERNAME);
+                    jsonObject.put("bookId", Id);
+
+                    webService.sendByPostMethod(url, jsonObject);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+            }
+        });
+        thread.start();
     }
 }

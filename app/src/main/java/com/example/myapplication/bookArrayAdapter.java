@@ -81,6 +81,7 @@ import java.util.ArrayList;
 
                             // Create an intent to start the BookDetailActivity
                             Intent intent = new Intent(itemView.getContext(), BookDetailsActivity.class);
+                            intent.putExtra("Id", book.getId());
                             intent.putExtra("Title", book.getTitle());
                             intent.putExtra("Price", book.getPrice());
                             intent.putExtra("Description", book.getDescription());
@@ -90,6 +91,8 @@ import java.util.ArrayList;
                             intent.putExtra("PublishDate",book.getPublishDate());
                             intent.putExtra("Author",book.getAuthor());
                             intent.putExtra("Book_Link",book.getBook_link());
+                            intent.putExtra("isSaved",book.isSaved());
+                            intent.putExtra("isLiked",book.isLiked());
                             Pair<View, String> p1 = Pair.create((View)imgBook, "bookImage");
 
 
