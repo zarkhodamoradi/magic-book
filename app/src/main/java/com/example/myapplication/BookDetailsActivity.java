@@ -37,6 +37,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     TextView txtBookDetailsDescription;
     TextView txtBookDetailsCategory ;
     ImageView imgBookDetailsDownload ;
+    ImageView imgBookDetailsReading ;
     String Title ;
     Integer Price ;
     String Description ;
@@ -46,6 +47,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     String PublishDate ;
     String Author ;
     String Book_Link ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +95,12 @@ public class BookDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 save[0] = !save[0];
+                Animate(imgBookDetailsSave);
                 if (save[0] == false){
                     imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_border_24);
                 }
                 else  imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_24);
+                Animate(imgBookDetailsSave);
             }
         });
         final boolean[] like = {false};
@@ -105,10 +109,14 @@ public class BookDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 like[0] = !like[0];
+
                 if (like[0] == false){
                     imgBookDetailsLike.setImageResource(R.drawable.favorite_24px);
                 }
-                else  imgBookDetailsLike.setImageResource(R.drawable.favorite_24px_filled);
+                else {
+                    imgBookDetailsLike.setImageResource(R.drawable.favorite_24px_filled);
+                }
+                Animate(imgBookDetailsLike);
             }
         });
 
@@ -128,6 +136,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                     downloadManager.enqueue(request);
                    // Toast.makeText(BookDetailsActivity.this, "Downloading started...", Toast.LENGTH_SHORT).show();
                     Snackbar.make(findViewById(android.R.id.content), "Download started...", Snackbar.LENGTH_LONG).show();
+                   Animate(imgBookDetailsDownload);
                 }
             }
         });
@@ -145,6 +154,25 @@ public class BookDetailsActivity extends AppCompatActivity {
         txtBookDetailsDescription = findViewById(R.id.txtBookDetailsDescription);
         txtBookDetailsCategory = findViewById(R.id.txtBookDetailsCategory);
         imgBookDetailsDownload = findViewById(R.id.imgBookDetailsDownload);
+        imgBookDetailsReading = findViewById(R.id.imgBookDetailsReading);
 
+    }
+
+    private void Animate(View view){
+        view.animate()
+                .scaleX(1.2f)
+                .scaleY(1.2f)
+                .setDuration(150)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.animate()
+                                .scaleX(1.0f)
+                                .scaleY(1.0f)
+                                .setDuration(150)
+                                .start();
+                    }
+                })
+                .start();
     }
 }
