@@ -9,8 +9,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +30,10 @@ public class WebService {
     public static final String GetByUrl = orgURL +"getbooks/index.php"; //"getBooks.php" ;
     public static final String GetCategories = orgURL +"getCategories/index.php"; //"getBooks.php" ;
     public static  final  String getBooksByCategory  =  orgURL+"getBooksByCategory/index.php?Category=";
+    public  static final  String insertBookToUserLibrary = orgURL+"insertSavedBook/index.php";
+    public  static final  String deleteSavedBook = orgURL+"deleteSavedBook/index.php";
 
+public static final String getBooksByUsername = orgURL+"getBooksByUsername/index.php?Username=";
 
     public static String InputStreamToString(InputStream stream) {
         try {
@@ -101,5 +107,27 @@ public class WebService {
                     }
                 });
         requestQueue.add(request);
+    }
+
+    public void sendByPostMethod(String url, JSONObject jsonObject) {
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
     }
 }

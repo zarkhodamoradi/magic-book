@@ -141,7 +141,12 @@ public class ProfileFragment extends Fragment {
 
                             userName.setText(user.getUserName());
                             userEmail.setText(user.getEmail());
-
+                          
+                            // Save the username in SharedPreferences
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("userName", user.getUserName());
+                            editor.apply();
+                   
                             // Load the image from the URL into the ImageView if the URL is not null or empty
                             if (imageUrl != null && !imageUrl.isEmpty()) {
                                 GetImage(imageUrl, userImage, queue);

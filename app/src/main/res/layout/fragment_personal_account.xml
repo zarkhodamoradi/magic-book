@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PersonalAccountFragment">
+
+
+    <TextView
+        android:id="@+id/PersonalAccountText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:text="My Books"
+        android:textSize="40dp"
+        android:textColor="@color/white"
+        android:gravity="center_vertical"
+        android:layout_margin="3dp"
+        android:padding="3dp"
+        android:layout_marginLeft="4dp"
+        android:fontFamily="@font/baloo_paaji_2_medium"
+        />
+
+    <Space
+        android:id="@+id/spaceAboveProgressBarPersonalAccount"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"></Space>
+    <ProgressBar
+        android:id="@+id/PersonalAccountProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_bar"
+        />
+    <Space
+        android:id="@+id/spaceUnderProgressBarPersonalAccount"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"></Space>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/PersonalAccountRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        />
+
+</LinearLayout>
