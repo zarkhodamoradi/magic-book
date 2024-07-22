@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -23,21 +24,23 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.Console;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
 public class PersonalAccountFragment extends Fragment {
-    TextView PersonalAccountText ;
-    RecyclerView PersonalAccountRecyclerView ;
-   public static  ArrayList<Book> myBooks ;
-    WebService webService ;
-    Space spaceAboveProgressBarPersonalAccount ;
-    Space spaceUnderProgressBarPersonalAccount ;
-    ProgressBar PersonalAccountProgressBar ;
-   bookArrayAdapter adapter ;
+    TextView PersonalAccountText;
+    RecyclerView PersonalAccountRecyclerView;
+    public static ArrayList<Book> myBooks  = new ArrayList<>() ;
+    WebService webService;
+    Space spaceAboveProgressBarPersonalAccount;
+    Space spaceUnderProgressBarPersonalAccount;
+    ProgressBar PersonalAccountProgressBar;
+   static bookArrayAdapter adapter;
 
+   public static Context context ;
 
     public PersonalAccountFragment() {
         // Required empty public constructor
@@ -47,6 +50,7 @@ public class PersonalAccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.context = this.getContext();
         webService = new WebService();
         adapter = new bookArrayAdapter(this.getContext(), R.layout.book, myBooks);
         webService.SetupRequextQueue(this.getContext());
@@ -56,24 +60,28 @@ public class PersonalAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_personal_account, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_personal_account, container, false);
         SetUpView(rootView);
 
 
         PersonalAccountRecyclerView.setItemAnimator(new DefaultItemAnimator());
         PersonalAccountRecyclerView.setLayoutManager(new GridLayoutManager(rootView.getContext(), 3));
         PersonalAccountRecyclerView.setAdapter(adapter);
+
+
         getUserLibraryBooks();
+        adapter.notifyDataSetChanged();
         return rootView;
     }
 
-    private void SetUpView(View rootView){
+    private void SetUpView(View rootView) {
         PersonalAccountRecyclerView = rootView.findViewById(R.id.PersonalAccountRecyclerView);
         PersonalAccountText = rootView.findViewById(R.id.PersonalAccountText);
         spaceAboveProgressBarPersonalAccount = rootView.findViewById(R.id.spaceAboveProgressBarPersonalAccount);
         spaceUnderProgressBarPersonalAccount = rootView.findViewById(R.id.spaceUnderProgressBarPersonalAccount);
         PersonalAccountProgressBar = rootView.findViewById(R.id.PersonalAccountProgressBar);
     }
+
     private void getUserLibraryBooks() {
 
         PersonalAccountRecyclerView.setVisibility(View.GONE);
@@ -85,7 +93,7 @@ public class PersonalAccountFragment extends Fragment {
         new Thread(() -> {
             try {
 
-                String json = webService.GetContentOfUrlConnection(webService.getBooksByUsername+MainActivity.USERNAME);
+                String json = webService.GetContentOfUrlConnection(webService.getBooksByUsername + MainActivity.USERNAME);
                 if (json != null && !json.isEmpty()) {
                     Gson gson = new Gson();
                     Type listType = new TypeToken<ArrayList<Book>>() {
@@ -103,6 +111,7 @@ public class PersonalAccountFragment extends Fragment {
                         spaceAboveProgressBarPersonalAccount.setVisibility(View.GONE);
                         spaceUnderProgressBarPersonalAccount.setVisibility(View.GONE);
                         PersonalAccountRecyclerView.setVisibility(View.VISIBLE);
+                        adapter.notifyDataSetChanged();
                     }
                 });
 

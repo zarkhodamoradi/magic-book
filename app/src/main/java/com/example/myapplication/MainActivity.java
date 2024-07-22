@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("sharedPref", MODE_PRIVATE);
         USERNAME = sharedPreferences.getString("userName", "defaultUserName");
-        fillingLibraryBooks();
+
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
         bottomNavigationView.setSelectedItemId(R.id.discover);
         replaceFragment(new DiscoverFragment());
-        PersonalAccountFragment.myBooks = new ArrayList<>();
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -93,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        PersonalAccountFragment.myBooks = new ArrayList<>();
+        fillingLibraryBooks();
     }
 
     private void SetUpView() {
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    private void fillingLibraryBooks() {
+    private   void fillingLibraryBooks() {
         WebService webService = new WebService();
         webService.SetupRequextQueue(this.getApplicationContext());
 
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }).start();
     }
 }

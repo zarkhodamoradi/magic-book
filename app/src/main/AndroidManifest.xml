@@ -17,25 +17,26 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".BookDetailsActivity"
             android:exported="false" />
         <activity
-
             android:name=".UserLoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdminLoginActivity"></activity>
+        <activity android:name=".AdminLoginActivity" />
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity android:name=".UserRegisterActivity"></activity>
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".UserRegisterActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

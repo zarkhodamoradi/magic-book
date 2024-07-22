@@ -6,6 +6,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
@@ -23,9 +24,15 @@ import androidx.core.view.WindowInsetsCompat;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class BookDetailsActivity extends AppCompatActivity {
 
@@ -69,7 +76,7 @@ boolean isLiked ;
         SetUpView();
          webService = new WebService();
         webService.SetupRequextQueue(this );
-
+fillingLibraryBooks();
 
         try {
             Bundle bundle = getIntent().getExtras();
@@ -125,10 +132,12 @@ boolean isLiked ;
                 if (isSaved == false){
                     imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_border_24);
                 Update(webService.deleteSavedBook);
+                fillingLibraryBooks();
                 }
                 else {
                     imgBookDetailsSave.setImageResource(R.drawable.baseline_bookmark_24);
                   Update(webService.insertBookToUserLibrary);
+                  fillingLibraryBooks();
                 }
                 Animate(imgBookDetailsSave);
             }
@@ -227,5 +236,30 @@ boolean isLiked ;
             }
         });
         thread.start();
+    }
+
+    private   void fillingLibraryBooks() {
+        WebService webService = new WebService();
+        webService.SetupRequextQueue(this.getApplicationContext());
+
+
+        Handler handler = new Handler();
+        new Thread(() -> {
+            try {
+
+                String json = webService.GetContentOfUrlConnection(webService.getBooksByUsername + MainActivity.USERNAME);
+                if (json != null && !json.isEmpty()) {
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<Book>>() {
+                    }.getType();
+                    PersonalAccountFragment.myBooks = gson.fromJson(json, listType);
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
     }
 }

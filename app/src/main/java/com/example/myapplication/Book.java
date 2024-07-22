@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 public class Book {
@@ -173,5 +176,63 @@ public class Book {
 
     public void setBook_link(String book_link) {
         this.book_link = book_link;
+    }
+
+    // Parcelable implementation
+    protected Book(Parcel in) {
+        Id = in.readInt();
+        Title = in.readString();
+        Price = in.readInt();
+        Description = in.readString();
+        Category = in.readString();
+        Image = in.readString();
+        if (in.readByte() == 0) {
+            rating = null;
+        } else {
+            rating = in.readDouble();
+        }
+        publishDate = in.readString();
+        author = in.readString();
+        book_link = in.readString();
+        saved = in.readByte() != 0;
+        liked = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
+
+    public int describeContents() {
+        return 0;
+    }
+
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(Id);
+        dest.writeString(Title);
+        dest.writeInt(Price);
+        dest.writeString(Description);
+        dest.writeString(Category);
+        dest.writeString(Image);
+        if (rating == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(rating);
+        }
+        dest.writeString(publishDate);
+        dest.writeString(author);
+        dest.writeString(book_link);
+        dest.writeByte((byte) (saved ? 1 : 0));
+        dest.writeByte((byte) (liked ? 1 : 0));
     }
 }
